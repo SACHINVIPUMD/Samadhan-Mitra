@@ -7,77 +7,99 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 class SLocker extends StatefulWidget {
-  const SLocker({Key? key}) : super(key: key);
+  SLocker({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   State<SLocker> createState() => _SLockerState();
 }
 
-  class _SLockerState extends State<SLocker> {
+class _SLockerState extends State<SLocker> {
+  File? docfile;
+  final TextEditingController _jobTitleController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: Color(0xFF01B399),
-        animationDuration: Duration(milliseconds: 300),
-        items: [
-        Icon(Icons.home),
-        Icon(Icons.search),
-        Icon(Icons.document_scanner_rounded),
-        Icon(Icons.lock_clock),
-        Icon(Icons.person),
-      ],
+      body: Column(
+        children: [
+          Container(
+            // padding: ,
+            child: CurvedNavigationBar(
+              backgroundColor: Colors.white,
+              color: const Color(0xFF01B399),
+              animationDuration: const Duration(milliseconds: 300),
+              items: const [
+                Icon(Icons.home),
+                Icon(Icons.search),
+                Icon(Icons.document_scanner_rounded),
+                Icon(Icons.lock_clock),
+                Icon(Icons.person),
+              ],
+            ),
+          ),
+          Container(
+            // padding: ,
+            child: TextButton(
+                onPressed: () {
+                  uploadPdf();
+                },
+                child: const Text("Upload PDF")),
+          )
+        ],
       ),
     );
   }
-  @override
-    Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          childer: [
-            TextButton(
-                 onPressed: () {
-                     uploadPdf();
-                 },
-                  child: const Text("Upload PDF")),
-
-          ],
+  Future uploadPdf() async{
+    final result = await FilePicker.platform.pickFiles(
+      type : FileType.custom ,
+      allowedExtensions: ['pdf' , 'doc'] ,
+    );
+    if (result != null ) {
+      final path = result.files.single.path!;
+      if(path.isNotEmpty) {
+        setState(() {
+          docfile = File(path);
+        });
+      }
+    }
+      Container(
+        padding: const EdgeInsets.only(left: 24.0, top: 18.0),
+        child: const Text(
+          'Professional Title',
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Gilroy',
+          ),
         ),
-      ),
-    ).
-  };
-}
-
-Future uploadPdf() async{
-  var dio = Di0();
-
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  if(result!=null){
-    File file = File(result.files.single.path ?? " ");
-
-    String fileName = file.path.split('/').last;
-    String path = file.path;
-
-    FormData data = FormData.fromMap({
-      'x-api-key':'apikey',
-      'file': await MultipartFile.fromFile(filePath, filename: fileName)
-    });
-
-    var response = dio.post("https://api.pdf.co/v1/file/upload", data: data);
-
-    onSendProgress(int sent, int total){
-      print('$sent $total');
-    });
-    print(response.toString());
-    }else{
-    print("Result is null");
-
+      );
+      Container(
+        padding: const EdgeInsets.only(left: 24.0, right: 16.0, top: 10.0),
+        child: DropdownButton<String>(
+          value: 'selected Job Title',
+          onChanged: (newValue){
+            setState(() {
+              var selectedJobTitle = newValue! ;
+              _jobTitleController.text = newValue;
+            });
+          },
+          items: <String>[
+            'Select Job Title',
+            'Advocate',
+            'Mediator',
+            'Arbitrator',
+            'Notaries',
+            'Legal Document Writer',
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      );
   }
 }
