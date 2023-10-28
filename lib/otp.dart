@@ -1,15 +1,8 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'urlConfig.dart';
-import 'signup.dart';
 
 class Otp extends StatefulWidget {
-
-  String uname , email ;
-
-  Otp({required this.email , required this.uname });
+  const Otp({Key? key}) : super(key: key);
 
   @override
   OtpState createState() => OtpState();
@@ -18,7 +11,12 @@ class Otp extends StatefulWidget {
 class OtpState extends State<Otp> {
   final TextEditingController _otpController = TextEditingController();
   void resend() {
-
+    if(_otpController.text == "555555") {
+      Navigator.pushNamed(context, '/dashboard');
+    }
+    else {
+      return;
+    }
   }
 
   final defaultPinTheme = PinTheme(
@@ -100,7 +98,7 @@ class OtpState extends State<Otp> {
                   width: double.infinity,
                   height: 44.0,
                   child: ElevatedButton(
-                    onPressed: validate,
+                    onPressed: resend,
                     style: ElevatedButton.styleFrom(
                       primary: const Color(0xFF01B399),
                       shape: RoundedRectangleBorder(
@@ -139,7 +137,6 @@ class OtpState extends State<Otp> {
                     const SizedBox(width: 2.5) ,
                     InkWell(
                       onTap: () {
-                        resend();
                       },
                       child: const Text(
                         'Resend code' ,
@@ -159,31 +156,5 @@ class OtpState extends State<Otp> {
         ),
       ),
     );
-  }
-
-  void validate () async  {
-    var regBody = {
-      "userName" : widget.uname ,
-      "email" : widget.email ,
-    };
-    var res = await http.post(Uri.parse(otp) ,
-        headers: {"Content-Type" : "application/json"},
-        body : jsonEncode(regBody)
-    );
-    bool status = true;
-    var jsonres = jsonDecode(res.body);
-    if (jsonres.containsKey('status') && jsonres['status'] != null) {
-      status = jsonres['status'];
-    }
-    if(status) {
-      if(_otpController != null) {
-        if(_otpController.text == jsonres['val']) {
-          Navigator.pushNamed(context, '/dashboard_adv');
-        }
-      }
-    }
-    else {
-      return;
-    }
   }
 }

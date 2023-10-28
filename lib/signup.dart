@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:Samadhanmitra/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'urlConfig.dart';
+import 'main.dart';
+import 'dashboard.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -47,9 +48,7 @@ class SignupState extends State<Signup> {
       );
       var jsonres = jsonDecode(res.body);
       if(jsonres['status']) {
-        // Navigator.pushNamed(context, '/otp');
-        Navigator.of(context).push(MaterialPageRoute(builder:  (context ) => Otp(email: _emailController.text, uname: _unameController.text)
-        ));
+        Navigator.pushNamed(context, '/otp');
       }
       else {
         return;
@@ -282,7 +281,7 @@ class SignupState extends State<Signup> {
                     style: ElevatedButton.styleFrom(
                       primary: const Color(0xFF01B399),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       elevation: 1,
                     ),
@@ -306,7 +305,7 @@ class SignupState extends State<Signup> {
                   mainAxisAlignment: MainAxisAlignment.center ,
                   children:  [
                     const Text(
-                      "Already signed up ?" ,
+                      "Already signed up?" ,
                       style: TextStyle(
                         color: Colors.grey ,
                         fontSize: 12.0 ,
@@ -320,7 +319,8 @@ class SignupState extends State<Signup> {
                         navigate();
                       },
                       child: const Text(
-                        'Login' ,
+                        ''
+                            'login' ,
                         style: TextStyle(
                           color: Color(0xff01B399) ,
                           fontSize: 12.0 ,

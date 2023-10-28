@@ -37,9 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.6
   pinput: ^2.2.31
+  intl: ^0.17.0
+  file_picker: ^1.4.3+2
+  curved_navigation_bar: ^1.0.3
   flutter_svg:
-  intl: ^0.18.1
-  file_picker:
+
 
 
 fonts:

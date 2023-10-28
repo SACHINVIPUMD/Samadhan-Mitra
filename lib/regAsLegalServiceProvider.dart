@@ -489,7 +489,7 @@ class RegAsLegalServiceProviderState extends State<RegAsLegalServiceProvider> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(left: 24.0, top: 18.0),
+                    padding: const EdgeInsets.only( left: 2.0, right: 16.0, top: 10.0),
                     child: const Text(
                       'Bar Admission',
                       style: TextStyle(
@@ -525,7 +525,7 @@ class RegAsLegalServiceProviderState extends State<RegAsLegalServiceProvider> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(left: 24.0, top: 18.0),
+                    padding: const EdgeInsets.only(top: 18.0),
                     child: const Text(
                       'Bar Council License Number',
                       style: TextStyle(
