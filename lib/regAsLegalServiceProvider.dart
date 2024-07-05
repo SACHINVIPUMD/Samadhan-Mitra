@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 
+
 class RegAsLegalServiceProvider extends StatefulWidget {
   const RegAsLegalServiceProvider({Key? key}) : super(key: key);
 

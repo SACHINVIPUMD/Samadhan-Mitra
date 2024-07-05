@@ -1,2 +1,4 @@
-final url = 'http://192.168.1.9:3533/';
-final reg = url + 'registration';
+const url = 'http://192.168.212.61:3533/';
+const reg = url + 'registration';
+const sendOTP = url + 'send-otp';
+const checkOTP = url + 'verify-otp';

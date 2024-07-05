@@ -1,4 +1,3 @@
-import 'package:Samadhanmitra/regAsLegalServiceProvider.dart';
 import 'package:Samadhanmitra/sLocker.dart';
 import 'package:flutter/material.dart';
 import 'Dashboard-advogate.dart';
@@ -7,8 +6,7 @@ import 'homeLocker.dart';
 import 'signup.dart';
 import 'dashboard.dart';
 import 'otp.dart';
-import 'test.dart';
-
+import 'package:Samadhanmitra/regAsLegalServiceProvider.dart';
 
 
 void main() {
@@ -33,10 +31,10 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const Signup(),
         '/dashboard': (context) => const Dashboard(),
         '/otp' : (context) => const Otp(),
-        '/regAsLegalServiceProvider' : (context) => const RegAsLegalServiceProvider(),
+        '/regAsLegalServiceProvider' : (context) =>  const RegAsLegalServiceProvider(),
         '/flash' : (context) => const Flash(),
         '/dashboard_adv' : (context) => const DashboardAdv(),
-        '/test' : (context) => Test(),
+        // '/test' : (context) => Test(),
         '/sLocker' : (context) => SLocker(),
         '/homeLocker' : (context) => const HomeLocker(),
 
@@ -91,11 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void validate() {
-    Navigator.pushNamed(context, '/homeLocker');
+    Navigator.pushNamed(context, '/otp');
   }
 
   void navigate() {
-    Navigator.pushNamed(context, '/sLocker');
+    Navigator.pushNamed(context, '/signup');
   }
 
   @override

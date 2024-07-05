@@ -48,7 +48,17 @@ class SignupState extends State<Signup> {
       );
       var jsonres = jsonDecode(res.body);
       if(jsonres['status']) {
-        Navigator.pushNamed(context, '/otp');
+        var Otpreq = {
+          "email" : _emailController.text
+        };
+        var resOTP = await http.post(Uri.parse(sendOTP) ,
+            headers: {"Content-Type" : "application/json"},
+            body : jsonEncode(Otpreq)
+        );
+        var OtpRes = jsonDecode(resOTP.body);
+        if(OtpRes['status']) {
+          Navigator.pushNamed(context, '/otp');
+        }
       }
       else {
         return;

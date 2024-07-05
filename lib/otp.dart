@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'urlConfig.dart';
+import 'package:http/http.dart' as http;
+import 'urlConfig.dart';
 
 class Otp extends StatefulWidget {
   const Otp({Key? key}) : super(key: key);
@@ -10,14 +15,6 @@ class Otp extends StatefulWidget {
 
 class OtpState extends State<Otp> {
   final TextEditingController _otpController = TextEditingController();
-  void resend() {
-    if(_otpController.text == "555555") {
-      Navigator.pushNamed(context, '/dashboard');
-    }
-    else {
-      return;
-    }
-  }
 
   final defaultPinTheme = PinTheme(
     width: 47,
@@ -98,7 +95,7 @@ class OtpState extends State<Otp> {
                   width: double.infinity,
                   height: 44.0,
                   child: ElevatedButton(
-                    onPressed: resend,
+                    onPressed: verify,
                     style: ElevatedButton.styleFrom(
                       primary: const Color(0xFF01B399),
                       shape: RoundedRectangleBorder(
@@ -156,5 +153,19 @@ class OtpState extends State<Otp> {
         ),
       ),
     );
+  }
+
+  Future<void> verify() async {
+    var Otpverify = {
+      "email" : _otpController.text
+    };
+    var resOTP = await http.post(Uri.parse(sendOTP) ,
+        headers: {"Content-Type" : "application/json"},
+        body : jsonEncode(Otpverify)
+    );
+    var OtpRes = jsonDecode(resOTP.body);
+    if(OtpRes['status']) {
+      Navigator.pushReplacement(context, '/dashboard_adv' as Route<Object?>);
+    }
   }
 }
